@@ -1,0 +1,58 @@
+= Cereal box.
+
+Serialization filters for active record.
+
+== Motivation
+
+Ever have a controller that looks like this?
+
+    class ThingController < ActionController::Base
+      respond_to :json
+
+      def show
+        @thing = Thing.find(1)
+        @thing = @thing.as_json 
+        @thing[:other_things][:name] = thing.other_thing.name
+        @thing[:other_related_thing][:name] = thing.other_related_thing.name
+
+        respond_with(@thing)
+      end
+    end
+
+Specifically adding additional related information from other models
+into the serialized hash of an object?  Well, no more!
+
+Doesn't this look better?
+
+    class ThingController < ActionController::Base
+      respond_to :json
+
+      def show
+        @thing = Thing.find(1)
+
+        respond_with(OtherRelatedThingFilter.new(ThingFilter.new(@thing))
+      end
+    end
+
+== Filters
+
+=== Implement a filter
+
+It's simple!  Just define a module that includes cereal_box and
+implements an attributes method.
+
+    module OtherThingFilter
+      include CerealBox
+
+      def attributes(base)
+        { :name => base.other_thing.name }
+      end
+    end
+
+== License
+
+Cereal Box is Copyright © 2011 Christopher Meiklejohn.  It is free software, and may be redistributed under the terms specified in the LICENSE file.
+
+== About
+
+The cereal_box gem was written by {Christopher Meiklejohn}[mailto:cmeiklejohn@swipely.com] from {Swipely, Inc.}[http://www.swipely.com].
