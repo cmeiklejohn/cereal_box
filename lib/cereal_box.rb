@@ -3,17 +3,35 @@ require "cereal_box/version"
 module CerealBox
 
   def self.included?(base)
-    base.attr_accessor :cereal_base_instance
-    base.attr_accessor :cereal_previous_filter
+    base.attr_accessor :cereal_box_base_instance
+    base.attr_accessor :cereal_box_previous_filter
   end
 
   def initialize(base)
-    @cereal_base_instance = base
+    @cereal_box_base_instance = base
   end
 
-  def as_json(options = {})
-    target = @cereal_previous_filter ? @cereal_previous_filter : @cereal_base_instance
-    target.send(:as_json, options).merge(self.send(:attributes, @cereal_base_instance))
+  def cereal_box_node_name
+    self.class.to_s.split(/(?=[A-Z])/).map{ |w| w.downcase }[0...-1].join("_").to_sym
+  end
+
+  def serializable_hash(options = {})
+    apply(:serializable_hash, options)
+  end
+
+  def as_json(options = {}) 
+    apply(:as_json, options)
+  end
+
+  def as_xml(options = {}) 
+    apply(:as_xml, options)
+  end
+
+  def apply(message, options = {})
+    target = @cereal_box_previous_filter ? @cereal_box_previous_filter : @cereal_box_base_instance
+    target.send(message.to_sym, options).merge(
+      { cereal_box_node_name => self.send(:attributes, @cereal_box_base_instance) }
+    )
   end
 
 end
