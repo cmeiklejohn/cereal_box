@@ -10,12 +10,12 @@ Ever have a controller that looks like this?
       respond_to :json
 
       def show
-        @thing = Thing.find(1)
-        @thing = @thing.as_json 
-        @thing[:other_things][:name] = thing.other_thing.name
-        @thing[:other_related_thing][:name] = thing.other_related_thing.name
+        @thing = Thing.find(params[:id])
+        @thing_json = @thing.as_json 
+        @thing_json[:other_things][:name] = @thing.other_thing.name
+        @thing_json[:other_related_thing][:name] = @thing.other_related_thing.name
 
-        respond_with(@thing)
+        respond_with(@thing_json)
       end
     end
 
