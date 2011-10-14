@@ -34,6 +34,20 @@ class SecondAdditiveFilter
   end
 end
 
+class Basket
+  def as_json(options = {})
+    {}
+  end
+end
+
+class LotionFilter 
+  include CerealBox
+
+  def attributes(base) 
+    { :lotion => true }
+  end
+end
+
 describe CerealBox do 
 
   describe 'with the base class' do 
@@ -113,6 +127,14 @@ describe CerealBox do
     it 'should include the additional method attributes' do 
       subject.as_xml[:additive].should include :c
       subject.as_xml[:additive][:c].should == "ceee"
+    end
+  end
+
+  describe 'with a basket and some lotion' do
+    subject { LotionFilter.new(Basket.new) }
+
+    it 'puts the lotion in the basket' do 
+      subject.as_json[:lotion].should include :lotion
     end
   end
 
