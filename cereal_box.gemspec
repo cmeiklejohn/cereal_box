@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Christopher Meiklejohn"]
   s.email       = ["christopher.meiklejohn@gmail.com"]
   s.homepage    = "https://github.com/cmeiklejohn/cereal_box"
-  s.summary     = %q{}
-  s.description = %q{}
+  s.summary     = %q{Serialization filters for active record.}
+  s.description = %q{Serialization filters for active record.}
 
   s.rubyforge_project = "cereal_box"
 
