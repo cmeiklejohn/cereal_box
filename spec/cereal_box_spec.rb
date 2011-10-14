@@ -18,6 +18,14 @@ class AdditiveFilter
   end
 end
 
+class SecondAdditiveFilter
+  include CerealBox
+
+  def attributes(base)
+    { :d => "d" }
+  end
+end
+
 describe CerealBox do 
 
   describe 'with the base class' do 
@@ -45,4 +53,24 @@ describe CerealBox do
     end
   end
 
+  describe 'with two additive filters' do 
+    subject { SecondAdditiveFilter.new(AdditiveFilter.new(Base.new)) } 
+
+    it 'should include the base attributes' do 
+      subject.as_json.keys.should include :a
+    end
+
+    it 'should include the additional direct attributes' do 
+      subject.as_json.keys.should include :b
+    end
+
+    it 'should include the additional method attributes' do 
+      subject.as_json.keys.should include :c
+      subject.as_json[:c].should == "ceee"
+    end
+
+    it 'should include the additional method attributes' do 
+      subject.as_json.keys.should include :d
+    end
+  end
 end
