@@ -24,9 +24,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency('guard') 
   s.add_development_dependency('guard-rspec')
   s.add_development_dependency('rake')
-
-  if RUBY_PLATFORM =~ /linux/i
-    s.add_development_dependency('rb-inotify')
-    s.add_development_dependency('libnotify')
-  end
 end
