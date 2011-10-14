@@ -49,6 +49,8 @@ implements an attributes method.
       end
     end
 
+Filters support as_xml, as_json and serializable_hash.
+
 == License
 
 Cereal Box is Copyright © 2011 Christopher Meiklejohn.  It is free software, and may be redistributed under the terms specified in the LICENSE file.
