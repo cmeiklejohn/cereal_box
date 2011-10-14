@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 class Base
-  def as_json 
+  def c
+    "ceee"
+  end
+
+  def as_json(options = {})
     { :a => "a" }
   end
 end
@@ -9,8 +13,8 @@ end
 class AdditiveFilter
   include CerealBox
 
-  def attributes
-    { :b => "b" }
+  def attributes(base)
+    { :b => "b", :c => base.c }
   end
 end
 
@@ -31,8 +35,13 @@ describe CerealBox do
       subject.as_json.keys.should include :a
     end
 
-    it 'should include the additional attributes' do 
+    it 'should include the additional direct attributes' do 
       subject.as_json.keys.should include :b
+    end
+
+    it 'should include the additional method attributes' do 
+      subject.as_json.keys.should include :c
+      subject.as_json[:c].should == "ceee"
     end
   end
 
