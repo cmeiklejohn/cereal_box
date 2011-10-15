@@ -2,9 +2,9 @@ require "cereal_box/version"
 
 module CerealBox
 
-  def self.included?(base)
-    base.attr_accessor :cereal_box_base_instance
-    base.attr_accessor :cereal_box_previous_filter
+  def self.included(base)
+    base.send(:attr_accessor, :cereal_box_base_instance)
+    base.send(:attr_accessor, :cereal_box_previous_filter)
   end
 
   def initialize(base)
