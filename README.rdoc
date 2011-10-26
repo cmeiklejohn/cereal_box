@@ -41,7 +41,7 @@ Doesn't this look better?
 It's simple!  Just define a module that includes cereal_box and
 implements an attributes method.
 
-    module OtherThingFilter
+    class OtherThingFilter
       include CerealBox
 
       def attributes(base)
