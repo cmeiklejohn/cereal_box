@@ -28,7 +28,7 @@ Doesn't this look better?
       respond_to :json
 
       def show
-        @thing = Thing.find(1)
+        @thing = Thing.find(params[:id])
 
         respond_with(OtherRelatedThingFilter.new(ThingFilter.new(@thing))
       end
